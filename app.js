@@ -63,6 +63,47 @@ const connection = require('./database/db');
         });
     })
 
+	app.post('/auth', async (req, res)=> {
+		const user = req.body.user;
+		const pass = req.body.pass;    
+		let passwordHash = await bcrypt.hash(pass, 8);
+		if (user && pass) {
+			connection.query('SELECT * FROM users WHERE user = ?', [user], async (error, results, fields)=> {
+				if( results.length == 0 || !(await bcrypt.compare(pass, results[0].pass)) ) {    
+					res.render('login', {
+							alert: true,
+							alertTitle: "Error",
+							alertMessage: "USUARIO y/o PASSWORD incorrectas",
+							alertIcon:'error',
+							showConfirmButton: true,
+							timer: false,
+							ruta: 'login'    
+						});
+					
+							
+				} else {         
+					
+					req.session.loggedin = true;                
+					req.session.name = results[0].name;
+					res.render('login', {
+						alert: true,
+						alertTitle: "Conexión exitosa",
+						alertMessage: "¡LOGIN CORRECTO!",
+						alertIcon:'success',
+						showConfirmButton: false,
+						timer: 1500,
+						ruta: ''
+					});        			
+				}			
+				res.end();
+			});
+		} else {	
+			res.send('Please enter user and Password!');
+			res.end();
+		}
+	});
+
+
     app.listen(3000, (req, res)=>{
         console.log('SERVER RUNNING IN http://localhost:3000');
     });
