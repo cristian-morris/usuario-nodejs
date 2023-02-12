@@ -38,3 +38,7 @@ const connection = require('./database/db');
 	app.get('/register',(req, res)=>{
 		res.render('register');
 	})
+
+    app.listen(3000, (req, res)=>{
+        console.log('SERVER RUNNING IN http://localhost:3000');
+    });
