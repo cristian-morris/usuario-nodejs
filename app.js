@@ -103,6 +103,27 @@ const connection = require('./database/db');
 		}
 	});
 
+    app.get('/', (req, res)=> {
+        if (req.session.loggedin) {
+            res.render('index',{
+                login: true,
+                name: req.session.name			
+            });		
+        } else {
+            res.render('index',{
+                login:false,
+                name:'Debe iniciar sesión',			
+            });				
+        }
+        res.end();
+    });
+    
+    
+    app.use(function(req, res, next) {
+        if (!req.user)
+            res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+        next();
+    });
 
     app.listen(3000, (req, res)=>{
         console.log('SERVER RUNNING IN http://localhost:3000');
