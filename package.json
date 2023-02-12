@@ -1,0 +1,21 @@
+{
+  "name": "usuario-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+   "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristian-morris/usuario-nodejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cristian-morris/usuario-nodejs/issues"
+  },
+  "homepage": "https://github.com/cristian-morris/usuario-nodejs#readme"
+}
